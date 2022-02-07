@@ -31,17 +31,43 @@ public class FilmController {
         return new ResponseEntity<Iterable<Film>>(filmList, HttpStatus.OK);
     }
 
+    @GetMapping("/{filmId}")
+    public ResponseEntity<?> getFilmById(@PathVariable Long filmId){
+        Film film = filmService.findFilmByFilmId(filmId);
+        return new ResponseEntity<Film>(film, HttpStatus.OK);
+    }
+
     @PostMapping("")
     public ResponseEntity<?> createNewFilm(@Valid @RequestBody Film newFilm, BindingResult result){
         ResponseEntity<?> hasErrors= mapValidationErrorService.MapValidationService(result);
         if(hasErrors==null){
-            Film savedFilm = filmService.saveOrUpdateFilm(newFilm);
+            Film savedFilm = filmService.saveOrUpdateFilm(newFilm,null);
             URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/" + savedFilm.getId()).build().toUri();
             // return new ResponseEntity<Object>(uri, HttpStatus.CREATED);
             return ResponseEntity.created(uri).build();
         }else{
             return hasErrors;
         }
+    }
+
+    @PutMapping("/{filmId}")
+    public ResponseEntity<?> updateFilm(@PathVariable Long filmId,@Valid @RequestBody Film newFilm, BindingResult result){
+        ResponseEntity<?> hasErrors= mapValidationErrorService.MapValidationService(result);
+        if(hasErrors==null){
+            Film savedFilm = filmService.saveOrUpdateFilm(newFilm,filmId);
+            URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/" + savedFilm.getId()).build().toUri();
+            // return new ResponseEntity<Object>(uri, HttpStatus.CREATED);
+            return ResponseEntity.created(uri).build();
+        }else{
+            return hasErrors;
+        }
+    }
+
+    @DeleteMapping("/{filmId}")
+    public ResponseEntity<String> deleteFilmById(@PathVariable Long filmId){
+
+        filmService.deleteFilmById(filmId);
+        return new ResponseEntity<String>("Project with project identifier of "+filmId+" has been deleted.",HttpStatus.OK);
     }
 
 }
