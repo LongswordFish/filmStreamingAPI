@@ -1,10 +1,12 @@
 package ca.wonderfish.filmstreamingapi.domains;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -24,12 +26,13 @@ public class User {
     private String fullName;
 
     @NotBlank(message = "password is required")
+    @Length(min = 6)
     private String password;
 
     @Transient
     private String confirmPassword;
 
-    @JsonFormat(pattern = "yyyy-mm-dd")
+    @JsonFormat(pattern = "yyyy-dd-mm")
     private Date created_at;
 
     private String role;
