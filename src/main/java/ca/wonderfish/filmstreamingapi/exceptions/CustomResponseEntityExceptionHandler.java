@@ -18,4 +18,10 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         return new ResponseEntity(filmIdExceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler
+    public ResponseEntity<Object> handleOrderIdException(OrderIdException orderIdException, WebRequest webRequest){
+        OrderIdExceptionResponse orderIdExceptionResponse = new OrderIdExceptionResponse(orderIdException.getMessage());
+        return new ResponseEntity(orderIdExceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
 }
