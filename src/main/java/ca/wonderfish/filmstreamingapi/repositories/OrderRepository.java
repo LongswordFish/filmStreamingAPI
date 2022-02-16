@@ -4,6 +4,8 @@ import ca.wonderfish.filmstreamingapi.domains.Order;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface OrderRepository extends CrudRepository<Order,Long> {
 
@@ -11,6 +13,8 @@ public interface OrderRepository extends CrudRepository<Order,Long> {
     Iterable<Order> findAll();
 
     Order findOrderByCustomerEmail(String customerEmail);
+
+    List<Order> findOrdersByCustomerEmail(String customerEmail);
 
     Order findOrderById(Long orderId);
 }

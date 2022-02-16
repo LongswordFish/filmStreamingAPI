@@ -25,6 +25,18 @@ public class FilmController {
     @Autowired
     private FilmService filmService;
 
+    @PostMapping("/1")
+    public ResponseEntity<?> film(@RequestBody Object object){
+        System.out.println(object);
+        System.out.println("aaaa");
+        System.out.println("aaaa");
+        System.out.println("aaaa");
+        System.out.println("aaaa");
+        System.out.println("aaaa");
+        return new ResponseEntity<String>("sucess",HttpStatus.OK);
+
+    }
+
     @GetMapping("")
     public ResponseEntity<?> getAllFilms(){
         var filmList = filmService.findAllFilms();

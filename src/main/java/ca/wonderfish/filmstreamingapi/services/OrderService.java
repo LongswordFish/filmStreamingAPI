@@ -30,12 +30,23 @@ public class OrderService {
         return savedOrder;
     }
 
-    public Order findOrderByOrderId(Long orderId){
+    public Order findOrderByOrderId(Long orderId,String userEmail){
         Order order =  orderRepository.findOrderById(orderId);
+        if(!userEmail.equals(order.getCustomerEmail())){
+            throw new OrderIdException("order id "+orderId+" doesn't belong to user "+userEmail);
+        }
         if(order == null){
             throw new OrderIdException("order id "+orderId+" doesn't exist");
         }
         return order;
+    }
+
+    public List<Order> findOrdersByUser(String userEmail){
+        List<Order> ordersByCustomerEmail = orderRepository.findOrdersByCustomerEmail(userEmail);
+        if(ordersByCustomerEmail == null){
+            throw new OrderIdException("No order for user: "+userEmail);
+        }
+        return ordersByCustomerEmail;
     }
 
 }
