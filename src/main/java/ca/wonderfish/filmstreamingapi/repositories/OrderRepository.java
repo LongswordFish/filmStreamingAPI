@@ -12,8 +12,6 @@ public interface OrderRepository extends CrudRepository<Order,Long> {
     @Override
     Iterable<Order> findAll();
 
-    Order findOrderByCustomerEmail(String customerEmail);
-
     List<Order> findOrdersByCustomerEmail(String customerEmail);
 
     Order findOrderById(Long orderId);

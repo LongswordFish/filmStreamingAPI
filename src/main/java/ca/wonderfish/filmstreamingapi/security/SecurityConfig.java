@@ -24,6 +24,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 )
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static final String[] AUTH_WHITELIST = {
+            "/swagger-resources/**",
+            "/**/swagger-ui.html",
+            "/swagger-ui/**",
+            "/**/v2/api-docs",
+            "/**/webjars/**"
+    };
+
     @Autowired
     private JwtAuthenticationEntryPoint unauthorizedHandler;
 
@@ -63,9 +71,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.html",
                         "/**/*.js"
+
                 ).permitAll()
+                .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers("/api/users/**").permitAll()
                 .antMatchers("/api/films/**").permitAll()
+                .antMatchers("/api/checkout/**").permitAll()
                 .anyRequest().authenticated();
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }

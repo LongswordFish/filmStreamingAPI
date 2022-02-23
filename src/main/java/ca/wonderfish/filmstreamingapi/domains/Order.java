@@ -26,7 +26,7 @@ public class Order {
     @JsonIgnoreProperties({"order"})
     private List<OrderItem> orderItems = new ArrayList<OrderItem>();
 
-    @JsonFormat(pattern = "yyyy-mm-dd")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date created_at;
 
     public Order() {

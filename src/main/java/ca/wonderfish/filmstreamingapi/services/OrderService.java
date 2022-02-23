@@ -43,6 +43,7 @@ public class OrderService {
 
     public List<Order> findOrdersByUser(String userEmail){
         List<Order> ordersByCustomerEmail = orderRepository.findOrdersByCustomerEmail(userEmail);
+        ordersByCustomerEmail.sort((order1,order2)->order2.getCreated_at().compareTo(order1.getCreated_at()));
         if(ordersByCustomerEmail == null){
             throw new OrderIdException("No order for user: "+userEmail);
         }
